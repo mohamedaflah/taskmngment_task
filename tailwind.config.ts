@@ -29,12 +29,7 @@ const config = {
           "auth-sections": "linear-gradient(180deg, #F7F7F7 0%, #F0F0F0 100%)",
         },
         borderImage: "linear-gradient(360deg, #4B36CC 0%, #9C93D4 107.69%)",
-        buttonBg: {
-          create: "linear-gradient(180deg, #4C38C2 0%, #2F2188 100%)",
-          add: "linear-gradient(180deg, #3A3A3A 0%, #202020 100%)",
-          link: "#0054A1",
-          "side-button": "#F4F4F4",
-        },
+
         alerts: {
           urgent: "#FF6B6B",
           medium: "#FFA235",
@@ -43,6 +38,7 @@ const config = {
         forgroundColor: {
           voilet: "#4534AC",
           black: "#080808",
+          kanbanbox: "#F9F9F9",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -93,6 +89,13 @@ const config = {
           to: { height: "0" },
         },
       },
+      backgroundImage: {
+        create: "linear-gradient(180deg, #4C38C2 0%, #2F2188 100%)",
+        add: "linear-gradient(180deg, #3A3A3A 0%, #202020 100%)",
+        link: "#0054A1",
+        "side-button": "#F4F4F4",
+      },
+
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",

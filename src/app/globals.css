@@ -69,4 +69,19 @@
   .flex-center {
     @apply flex items-center justify-center;
   }
+  .create-button {
+    background: linear-gradient(180deg, #4c38c2 0%, #2f2188 100%);
+  }
+  .urgent {
+    @apply px-2 rounded-lg flex-center bg-alerts-urgent;
+  }
+  .medium {
+    @apply px-2 rounded-lg flex-center bg-alerts-medium;
+  }
+  .low {
+    @apply px-2 rounded-lg flex-center bg-alerts-low;
+  }
+  .add-button{
+    /* background; */
+  }
 }

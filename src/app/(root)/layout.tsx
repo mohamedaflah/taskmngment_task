@@ -13,7 +13,7 @@ export default function RootLayout({
   sidebar: React.ReactNode;
 }) {
   return (
-    <main className="h-screen w-full flex ">
+    <main className="h-screen w-full flex bg-[#F7F7F7] ">
       {sidebar}
       {children}
     </main>

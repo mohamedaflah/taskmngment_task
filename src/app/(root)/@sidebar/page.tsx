@@ -3,12 +3,12 @@ import { Navigations } from "@/constants/navigations";
 import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 const SideBar = () => {
   const pathname = usePathname();
   return (
-    <aside className="sticky top-0 left-0 w-56 border p-3 flex flex-col justify-between">
+    <aside className="sticky top-0 left-0 w-56 border p-3 flex flex-col justify-between bg-white">
       <main>
         <div className="flex w-full items-center gap-2">
           <Image
@@ -54,7 +54,7 @@ const SideBar = () => {
           {Navigations.map(({ iconpath, id, title, path }) => (
             <div
               key={id}
-              className={cn("w-full h-9 flex items-center px-2 gap-3", {
+              className={cn("w-full cursor-pointer h-9 flex items-center px-2 gap-3", {
                 "bg-buttonBg-side-button rounded-md border-2 border-[#DDDDDD]":
                   pathname == path,
               })}
@@ -73,7 +73,7 @@ const SideBar = () => {
           >
             Create new task
             <div className="bg-white size-6 flex-center rounded-full">
-              <Plus className="w-4 text-buttonBg-link" />
+              <Plus className="w-4 text-violet-700" />
             </div>
           </button>
         </div>
@@ -90,7 +90,9 @@ const SideBar = () => {
           </div>
           <div className="h-full flex flex-col">
             <h1 className="font-semibold ">Download the app</h1>
-            <span className="text-[12px] font-sans">Get the full experience </span>
+            <span className="text-[12px] font-sans">
+              Get the full experience{" "}
+            </span>
           </div>
         </div>
       </div>
