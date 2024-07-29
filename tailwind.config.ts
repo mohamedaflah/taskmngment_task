@@ -35,6 +35,11 @@ const config = {
           link: "#0054A1",
           "side-button": "#F4F4F4",
         },
+        alerts: {
+          urgent: "#FF6B6B",
+          medium: "#FFA235",
+          low: "#0ECC5A",
+        },
         forgroundColor: {
           voilet: "#4534AC",
           black: "#080808",
