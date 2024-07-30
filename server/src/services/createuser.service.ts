@@ -1,5 +1,5 @@
 import userModel from "../models/user.model";
-
+import bcrypt from "bcryptjs";
 export async function createUser(user: {
   name: string;
   email: string;
@@ -9,6 +9,7 @@ export async function createUser(user: {
   if (userStatus) {
     throw new Error("user already exist");
   }
+  user.password = bcrypt.hashSync(user.password, 10);
   const newUser = new userModel(user);
   await newUser.save();
   return newUser;

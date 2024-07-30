@@ -1,6 +1,7 @@
 import express from "express";
 import { config } from "dotenv";
 config();
+import "./configuration/mongo.config";
 import cors from "cors";
 const app = express();
 app.use(
