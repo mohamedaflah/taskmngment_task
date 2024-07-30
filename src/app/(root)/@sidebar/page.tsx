@@ -79,7 +79,7 @@ const SideBar = () => {
         </div>
       </main>
       <div className="h-20  w-full">
-        <div className="h-14 flex items-center py-1 px-3 rounded-md bg-buttonBg-side-button">
+        <div className="h-14 flex items-center bg-forgroundColor-kanbanbox py-1 px-3 rounded-md bg-buttonBg-side-button">
           <div>
             <Image
               alt="Load"

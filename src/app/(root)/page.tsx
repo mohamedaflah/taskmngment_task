@@ -106,6 +106,10 @@ export default function Home() {
                 <span className="text-sm">1 hr ago</span>
               </div>
             </div>
+            <button className="w-full justify-between h-9 rounded-md px-2 flex items-center bg-add text-white text-sm">
+              Add Task
+              <Plus className="w-5" />
+            </button>
           </div>
         </main>
       </div>
