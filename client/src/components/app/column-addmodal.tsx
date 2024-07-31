@@ -2,18 +2,34 @@ import { cn } from "@/lib/utils";
 import { Maximize2, Plus, X } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
-import {
-  SelectItem,
-  Select,
-  SelectContent,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import toast from "react-hot-toast";
 
+import toast from "react-hot-toast";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { columnAddSchema } from "@/lib/Schema/columnadd.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 export function ColumnAddModal() {
   const modalRef = useRef<HTMLDialogElement>(null);
   const [expaned, setExapned] = useState<boolean>(false);
+  const {
+    watch,
+    setValue,
+    trigger,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<z.infer<typeof columnAddSchema>>({
+    resolver: zodResolver(columnAddSchema),
+    mode: "onChange",
+    reValidateMode: "onChange",
+    defaultValues: {
+      deadline: new Date(),
+      description: "",
+      title: "",
+    },
+  });
+  const handlecolumnAdd = (values: z.infer<typeof columnAddSchema>) => {};
   return (
     <>
       <button
@@ -122,15 +138,11 @@ export function ColumnAddModal() {
                   <span>Deadline</span>
                 </div>
                 <div className="w-full">
-                  <select className="select  w-full  bg-transparent border-none outline-none">
-                    <option disabled selected>
-                      not selected
-                    </option>
-                    <option>Game of Thrones</option>
-                    <option>Lost</option>
-                    <option>Breaking Bad</option>
-                    <option>Walking Dead</option>
-                  </select>
+                  <DatePicker
+                    className="w-full bg-transparent"
+                    selected={new Date()}
+                    // onChange={(date) => setStartDate(date)}
+                  />
                 </div>
               </div>
               <div className="mt-2 flex items-center gap-5 w-full ">

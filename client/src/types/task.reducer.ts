@@ -17,4 +17,5 @@ export interface TaskReducerIntital {
   loading: boolean;
   error: string | boolean;
   task: Tasks[] | null;
+  status: { _id: string; title: string }[] | null;
 }

@@ -1,6 +1,7 @@
 "use client";
 import { ColumnAddModal } from "@/components/app/column-addmodal";
 import { LandingTopCard } from "@/components/app/landing-topcard";
+import { getTodos } from "@/redux/actions/todo/todo.action";
 import { getUserAction } from "@/redux/actions/user/user.action";
 import { handleTaskDrop } from "@/redux/reducers/task.reducer";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
@@ -13,6 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getUserAction());
+    dispatch(getTodos());
   }, [dispatch]);
 
   const { user } = useAppSelector((state) => state.user);
@@ -209,7 +211,7 @@ export default function Home() {
                     {card.title}
                   </h3>
                   <p className="text-[13px] text-[#797979] mt-1 leading-4">
-                    {card.description + " => " + card._id}
+                    {card.description}
                   </p>
                 </div>
                 <div>

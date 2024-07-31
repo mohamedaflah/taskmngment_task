@@ -1,67 +1,85 @@
 import { TaskReducerIntital } from "@/types/task.reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getTodos } from "../actions/todo/todo.action";
+import toast from "react-hot-toast";
 
 const initialState: TaskReducerIntital = {
   loading: false,
   error: false,
-  task: [
-    {
-      _id: "aslkdfdjalksfd",
-      title: "Todo",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      tasks: [
-        {
-          _id: "8754",
-          createdAt: new Date(),
-          description: "this it test description",
-          priority: "urgent",
-          title: "Implement usasfder interface",
-        },
-        {
-          _id: "456",
-          createdAt: new Date(),
-          description: "this it test description",
-          priority: "low",
-          title: "Implement user",
-        },
-        {
-          _id: "543",
-          createdAt: new Date(),
-          description: "this it test description",
-          priority: "medium",
-          title: "Implement asdfuser",
-        },
-      ],
-    },
-    {
-      _id: "biolambobanbdolid",
-      title: "In progress",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      tasks: [
-        {
-          _id: "9034",
-          createdAt: new Date(),
-          description: "this it test description",
-          priority: "urgent",
-          title: "Implemeasdfasfdser interface",
-        },
-        {
-          _id: "12",
-          createdAt: new Date(),
-          description: "this it test description",
-          priority: "low",
-          title: "Implement asfduser",
-        },
-      ],
-    },
-  ],
+  status: null,
+  task: null,
+  // [
+  //   {
+  //     _id: "aslkdfdjalksfd",
+  //     title: "Todo",
+  //     createdAt: new Date(),
+  //     updatedAt: new Date(),
+  //     tasks: [
+  //       {
+  //         _id: "8754",
+  //         createdAt: new Date(),
+  //         description: "this it test description",
+  //         priority: "urgent",
+  //         title: "Implement usasfder interface",
+  //       },
+  //       {
+  //         _id: "456",
+  //         createdAt: new Date(),
+  //         description: "this it test description",
+  //         priority: "low",
+  //         title: "Implement user",
+  //       },
+  //       {
+  //         _id: "543",
+  //         createdAt: new Date(),
+  //         description: "this it test description",
+  //         priority: "medium",
+  //         title: "Implement asdfuser",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     _id: "biolambobanbdolid",
+  //     title: "In progress",
+  //     createdAt: new Date(),
+  //     updatedAt: new Date(),
+  //     tasks: [
+  //       {
+  //         _id: "9034",
+  //         createdAt: new Date(),
+  //         description: "this it test description",
+  //         priority: "urgent",
+  //         title: "Implemeasdfasfdser interface",
+  //       },
+  //       {
+  //         _id: "12",
+  //         createdAt: new Date(),
+  //         description: "this it test description",
+  //         priority: "low",
+  //         title: "Implement asfduser",
+  //       },
+  //     ],
+  //   },
+  // ],
 };
 
 const taskReducer = createSlice({
   initialState,
   name: "task-reducer",
+  extraReducers: (builder) => {
+    builder
+      .addCase(getTodos.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getTodos.fulfilled, (state, { payload }) => {
+        state.task = payload.todos;
+      })
+      .addCase(getTodos.rejected, (state, { payload }) => {
+        state.error = String(payload);
+        state.loading = false;
+        toast.error(state.error);
+      });
+  },
   reducers: {
     updateTaskState(state, action: PayloadAction<TaskReducerIntital>) {
       state.task = action.payload.task;
