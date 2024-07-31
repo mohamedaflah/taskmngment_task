@@ -5,9 +5,10 @@
   2. cd client
   3. npm install
   4. npm run dev
-  5. cd ../server/
-  6. npm install
-  7. npm run build
-  8. npm start
+  5. add new terminal without closing existing terminal
+  6. cd ../server/
+  7. npm install
+  8. npm run build
+  9. npm start
 
 ## Ensure .env file added in both client and server, refer .env.local and env.sample.txt file
