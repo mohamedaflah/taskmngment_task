@@ -1,12 +1,18 @@
 "use client";
 import { Navigations } from "@/constants/navigations";
 import { cn } from "@/lib/utils";
+import { userlogoutAction } from "@/redux/actions/user/user.action";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Plus } from "lucide-react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+
 import React from "react";
 const SideBar = () => {
   const pathname = usePathname();
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   return (
     <aside className="sticky top-0 left-0 w-56 border p-3 flex flex-col justify-between bg-white">
       <main>
@@ -19,7 +25,7 @@ const SideBar = () => {
             className="rounded-md object-cover size-8"
           />
           <h1 className="font-medium font-sans text-forgroundColor-black text-[17px]">
-            Joe Gardner
+            {user?.name}
           </h1>
         </div>
         <div className="flex justify-between w-full mt-2 items-center">
@@ -45,7 +51,16 @@ const SideBar = () => {
             </div>
           </div>
           <div className="">
-            <button className="h-9 px-2 font-medium flex-center bg-buttonBg-side-button rounded-sm">
+            <button
+              className="h-9 px-2 font-medium flex-center bg-forgroundColor-side-button rounded-sm"
+              onClick={() => {
+                dispatch(userlogoutAction()).then((res) => {
+                  if (res.type.endsWith("fulfilled")) {
+                    router.push("/login");
+                  }
+                });
+              }}
+            >
               Logout
             </button>
           </div>

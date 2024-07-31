@@ -1,5 +1,6 @@
 import { axiosInstance } from "@/constants/axios";
 import { handleErrors } from "@/lib/handleError";
+import { loginSchema } from "@/lib/Schema/Login.schema";
 import { signupFormSchema } from "@/lib/Schema/Signup.schema";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { z } from "zod";
@@ -33,6 +34,18 @@ export const userlogoutAction = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.delete(`/api/user/user`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(handleErrors(error));
+    }
+  }
+);
+
+export const userLoginAction = createAsyncThunk(
+  "user/login",
+  async (userData: z.infer<typeof loginSchema>, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post("/api/user/login", userData);
       return data;
     } catch (error) {
       return rejectWithValue(handleErrors(error));

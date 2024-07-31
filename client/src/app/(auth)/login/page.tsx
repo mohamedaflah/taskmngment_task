@@ -1,8 +1,11 @@
 "use client";
 import { loginSchema } from "@/lib/Schema/Login.schema";
+import { userLoginAction } from "@/redux/actions/user/user.action";
+import { useAppDispatch } from "@/redux/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,7 +26,15 @@ const Login = () => {
       password: "",
     },
   });
-  const handleLogin = (values: z.infer<typeof loginSchema>) => {};
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const handleLogin = (values: z.infer<typeof loginSchema>) => {
+    dispatch(userLoginAction(values)).then((res) => {
+      if (res.type.endsWith("fulfilled")) {
+        router.push("/");
+      }
+    });
+  };
   return (
     <main className="w-full h-screen overflow-hidden flex-center items-start bg-secondary-gradient">
       <section className="w-[90%] sm:w-[67%] md:w-[48%] lg:w-[38%] h-[420px] mt-20 border border-[#CECECE] rounded-xl bg-auth-sections pt-14 flex flex-col items-center">
@@ -31,7 +42,10 @@ const Login = () => {
           Welcome to <span className="text-forgroundColor-voilet">Workflo</span>
           !
         </h1>
-        <form className="w-[80%] flex flex-col gap-4 items-center mt-6 ">
+        <form
+          className="w-[80%] flex flex-col gap-4 items-center mt-6 "
+          onSubmit={handleSubmit(handleLogin)}
+        >
           <div className="flex flex-col w-full">
             <input
               type="text"
