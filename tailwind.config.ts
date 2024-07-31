@@ -30,6 +30,7 @@ const config = {
           voilet: "#4534AC",
           black: "#080808",
           kanbanbox: "#F9F9F9",
+          "side-button": "#F4F4F4",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -84,7 +85,6 @@ const config = {
         create: "linear-gradient(180deg, #4C38C2 0%, #2F2188 100%)",
         add: "linear-gradient(180deg, #3A3A3A 0%, #202020 100%)",
         link: "#0054A1",
-        "side-button": "#F4F4F4",
         "custom-gradient": "linear-gradient(180deg, #FFFFFF 0%, #AFA3FF 100%)",
         "foreground-image":
           "linear-gradient(180deg, #4C38C2 0%, #2F2188 100%), linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))",

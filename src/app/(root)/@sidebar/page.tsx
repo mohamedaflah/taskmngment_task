@@ -54,10 +54,13 @@ const SideBar = () => {
           {Navigations.map(({ iconpath, id, title, path }) => (
             <div
               key={id}
-              className={cn("w-full cursor-pointer h-9 flex items-center px-2 gap-3", {
-                "bg-buttonBg-side-button rounded-md border-2 border-[#DDDDDD]":
-                  pathname == path,
-              })}
+              className={cn(
+                "w-full cursor-pointer h-9 flex items-center px-2 gap-3",
+                {
+                  "bg-forgroundColor-side-button rounded-md border border-[#DDDDDD]":
+                    pathname == path,
+                }
+              )}
             >
               <Image alt="" width={23} height={23} src={iconpath} />{" "}
               <span>{title}</span>

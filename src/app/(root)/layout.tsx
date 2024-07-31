@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Todo management",
   description: "Trello like todo app ",
+  applicationName:"Todo"
 };
 
 export default function RootLayout({
