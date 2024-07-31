@@ -1,13 +1,15 @@
 "use client";
 import { ColumnAddModal } from "@/components/app/column-addmodal";
 import { LandingTopCard } from "@/components/app/landing-topcard";
-import { getTodos } from "@/redux/actions/todo/todo.action";
+import { axiosInstance } from "@/constants/axios";
+import { getTodos, updateTodo } from "@/redux/actions/todo/todo.action";
 import { getUserAction } from "@/redux/actions/user/user.action";
 import { handleTaskDrop } from "@/redux/reducers/task.reducer";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Menu, Plus } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -92,7 +94,7 @@ export default function Home() {
     return Math.min(Math.max(dropIndex, 0), targetElement.children.length - 1);
   };
 
-  const handleDragEnd = (
+  const handleDragEnd = async (
     sourceColumnId: string,
     taskId: string,
     targetColumnId: string,
@@ -116,6 +118,18 @@ export default function Home() {
         targetIndex,
       })
     );
+    try {
+      const { data } = await axiosInstance.put(`/api/todo/todo`, {
+        sourceColumnId,
+        targetColumnId,
+        taskId,
+        sourceIndex,
+        targetIndex,
+      });
+    } catch (error: any) {
+      console.error("Failed to update task order:", error);
+      toast.error("Failed to update task order:", error.message);
+    }
   };
 
   return (
@@ -216,7 +230,7 @@ export default function Home() {
                 </div>
                 <div>
                   <div
-                    className={`${card.priority.toLowerCase()} inline-block text-white text-[13px] py-1 font-[400]`}
+                    className={`${card?.priority?.toLowerCase()} inline-block text-white text-[13px] py-1 font-[400]`}
                   >
                     {card.priority}
                   </div>

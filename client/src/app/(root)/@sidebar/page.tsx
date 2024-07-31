@@ -1,4 +1,5 @@
 "use client";
+import { TaskTitleAddModal } from "@/components/app/todotitle-addmodal";
 import { Navigations } from "@/constants/navigations";
 import { cn } from "@/lib/utils";
 import { userlogoutAction } from "@/redux/actions/user/user.action";
@@ -83,17 +84,7 @@ const SideBar = () => {
           ))}
         </div>
         <div className="mt-2 mx-auto">
-          <button
-            className="flex-center font-sans  h-10 gap-2  bg-buttonBg-create text-white rounded-md w-full"
-            style={{
-              background: "linear-gradient(180deg, #4C38C2 0%, #2F2188 100%)",
-            }}
-          >
-            Create new task
-            <div className="bg-white size-6 flex-center rounded-full">
-              <Plus className="w-4 text-violet-700" />
-            </div>
-          </button>
+          <TaskTitleAddModal />
         </div>
       </main>
       <div className="h-20  w-full">

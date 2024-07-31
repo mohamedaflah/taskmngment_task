@@ -51,3 +51,38 @@ export const getTodos = createAsyncThunk(
     }
   }
 );
+
+// sourceColumnId, targetColumnId, taskId, sourceIndex, targetIndex
+
+export const updateTodo = createAsyncThunk(
+  "todo/update-todo",
+  async (
+    sendPayload: {
+      sourceColumnId: string | number;
+      targetColumnId: string | number;
+      taskId: string | number;
+      sourceIndex: string | number;
+      targetIndex: string | number;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await axiosInstance.put(`/api/todo/todo`, sendPayload);
+      return data;
+    } catch (error) {
+      return rejectWithValue(handleErrors(error));
+    }
+  }
+);
+
+export const addTodoTitle = createAsyncThunk(
+  "todo/add-todo",
+  async (sendPayload: { title: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post(`/api/todo/todo`, sendPayload);
+      return data;
+    } catch (error) {
+      return rejectWithValue(handleErrors(error));
+    }
+  }
+);

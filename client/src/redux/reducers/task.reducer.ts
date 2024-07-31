@@ -1,6 +1,6 @@
-import { TaskReducerIntital } from "@/types/task.reducer";
+import { TaskReducerIntital, Tasks } from "@/types/task.reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getTodos } from "../actions/todo/todo.action";
+import { addTask, addTodoTitle, getTodos } from "../actions/todo/todo.action";
 import toast from "react-hot-toast";
 
 const initialState: TaskReducerIntital = {
@@ -73,10 +73,34 @@ const taskReducer = createSlice({
       })
       .addCase(getTodos.fulfilled, (state, { payload }) => {
         state.task = payload.todos;
+        state.loading = false;
       })
       .addCase(getTodos.rejected, (state, { payload }) => {
         state.error = String(payload);
         state.loading = false;
+        toast.error(state.error);
+      })
+      .addCase(addTask.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addTask.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.task = payload.todo;
+      })
+      .addCase(addTask.rejected, (state, { payload }) => {
+        state.error = String(payload);
+        state.loading = false;
+      })
+      .addCase(addTodoTitle.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addTodoTitle.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.task?.push(payload.todo);
+      })
+      .addCase(addTodoTitle.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = String(payload);
         toast.error(state.error);
       });
   },

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import todoSchema from "../../models/todo.model";
+
 export async function updateTodController(req: Request, res: Response) {
   const { sourceColumnId, targetColumnId, taskId, sourceIndex, targetIndex } =
     req.body;
@@ -22,14 +23,17 @@ export async function updateTodController(req: Request, res: Response) {
       return res.status(404).send({ message: "Task not found" });
     }
 
-    sourceColumn.tasks.id(taskId).remove();
+    // Remove the task from the source column
+    sourceColumn.tasks.pull(taskId);
 
+    // Add the task to the target column at the specified index
     if (sourceColumnId === targetColumnId) {
       sourceColumn.tasks.splice(targetIndex, 0, taskToMove);
     } else {
       targetColumn.tasks.splice(targetIndex, 0, taskToMove);
     }
 
+    // Save the changes
     await sourceColumn.save();
     if (sourceColumnId !== targetColumnId) {
       await targetColumn.save();
