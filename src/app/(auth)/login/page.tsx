@@ -36,7 +36,10 @@ const Login = () => {
             <input
               type="text"
               value={watch("email")}
-              onChange={(e) => setValue("email", e.target.value)}
+              onChange={(e) => {
+                setValue("email", e.target.value);
+                trigger("email");
+              }}
               className="w-full h-12 px-3 rounded-md bg-[#EBEBEB]"
               placeholder="email"
             />
@@ -49,7 +52,10 @@ const Login = () => {
               <input
                 type="password"
                 value={watch("password")}
-                onChange={(e) => setValue("password", e.target.value)}
+                onChange={(e) => {
+                  setValue("password", e.target.value);
+                  trigger("password");
+                }}
                 className="w-full h-12 px-3 rounded-md bg-[#EBEBEB]"
                 placeholder="Enter password"
               />

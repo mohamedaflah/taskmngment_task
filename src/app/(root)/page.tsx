@@ -1,13 +1,21 @@
+"use client";
 import { LandingTopCard } from "@/components/app/landing-topcard";
+import { getUserAction } from "@/redux/actions/user/user.action";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Menu, Plus } from "lucide-react";
 import Image from "next/image";
-
+import { useEffect } from "react";
 export default function Home() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getUserAction());
+  }, [dispatch]);
+  const { user } = useAppSelector((state) => state.user);
   return (
     <main className="h-screen overflow-y-auto flex-1 p-3 ">
       <div className="w-full flex justify-between items-center">
         <h1 className="font-semibold text-4xl text-forgroundColor-black">
-          Good morning, Joe!
+          Good morning, {user?.name}
         </h1>
         <div className="flex gap-1 items-center text-forgroundColor-black">
           <span>Help and feedback</span>

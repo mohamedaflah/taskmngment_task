@@ -1,9 +1,13 @@
 "use client";
 import { signupFormSchema } from "@/lib/Schema/Signup.schema";
+import { cn } from "@/lib/utils";
+import { userSignupAction } from "@/redux/actions/user/user.action";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EyeOffIcon } from "lucide-react";
+import { EyeOffIcon, LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -19,8 +23,17 @@ const Signup = () => {
     mode: "onChange",
     reValidateMode: "onChange",
   });
-  const handleSignup = (values: z.infer<typeof signupFormSchema>) => {};
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const handleSignup = (values: z.infer<typeof signupFormSchema>) => {
+    dispatch(userSignupAction(values)).then((res) => {
+      if (res.type.endsWith("fulfilled")) {
+        router.replace("/");
+      }
+    });
+  };
   const [showPass, setShowPass] = useState<boolean>(false);
+  const { loading } = useAppSelector((state) => state.user);
   return (
     <main className="w-full h-screen overflow-hidden flex-center items-start bg-secondary-gradient">
       <section className="w-[90%] sm:w-[67%] md:w-[48%] lg:w-[38%] pb-10 min-h-[420px] mt-20 border border-[#CECECE] rounded-xl bg-auth-sections pt-14 flex flex-col items-center">
@@ -99,10 +112,17 @@ const Signup = () => {
             </span>
           </div>
           <button
-            className="w-full h-12 rounded-md flex-center bg-create text-white"
+            className={cn(
+              "w-full h-12 rounded-md flex-center bg-create text-white gap-2",
+              {
+                "pointer-events-none bg-create/70": loading,
+              }
+            )}
             type="submit"
           >
             Signup
+            {loading && <>
+            <LoaderCircle className="w-5 animate-spin"/></>}
           </button>
         </form>
         <div className="mt-6">
