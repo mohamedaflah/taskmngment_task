@@ -1,4 +1,5 @@
 "use client";
+import { ColumnAddModal } from "@/components/app/column-addmodal";
 import { LandingTopCard } from "@/components/app/landing-topcard";
 import { getUserAction } from "@/redux/actions/user/user.action";
 import { handleTaskDrop } from "@/redux/reducers/task.reducer";
@@ -116,33 +117,7 @@ export default function Home() {
   };
 
   return (
-    <main className="h-screen overflow-y-auto flex-1 p-3 ">
-      <style jsx global>{`
-        .task-card {
-          transition: all 0.3s ease;
-        }
-        .task-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        .task-column {
-          transition: background-color 0.3s ease;
-        }
-        @keyframes pulse {
-          0% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.05);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-        .pulse {
-          animation: pulse 1s infinite;
-        }
-      `}</style>
+    <main className="h-screen overflow-y-auto flex-1 p-3 scrollbar-thin">
       <div className="w-full flex justify-between items-center">
         <h1 className="font-semibold text-4xl text-forgroundColor-black">
           Good morning, {user?.name}
@@ -168,6 +143,43 @@ export default function Home() {
           imagePath="/images/access.svg"
           descriptioin="Sync your notes across all devices. Stay productive whether you're on your phone, tablet, or computer."
         />
+      </div>
+      <div className="mt-4 w-full flex justify-between flex-wrap">
+        <div>
+          <div className="flex px-3 h-8 w-56 rounded-md border bg-white justify-between">
+            <input
+              type="search"
+              className="w-full h-full outline-none text-sm bg-white"
+              placeholder="Search"
+            />
+            <Image width={20} height={20} alt="" src={"/icons/find.svg"} />
+          </div>
+        </div>
+        <Menu className="lg:hidden" />
+        <div className=" gap-3 hidden lg:flex">
+          <button className="h-9 px-2 flex gap-3 bg-forgroundColor-side-button items-center rounded-md font-sans">
+            Calender view
+            <Image width={20} height={20} alt="" src={"/icons/calendar.svg"} />
+          </button>
+          <button className="h-9 px-2 flex gap-3 bg-forgroundColor-side-button items-center rounded-md font-sans">
+            Automation
+            <Image
+              width={20}
+              height={20}
+              alt=""
+              src={"/icons/automation.svg"}
+            />
+          </button>
+          <button className="h-9 px-2 flex gap-3 bg-forgroundColor-side-button items-center rounded-md font-sans">
+            Filter
+            <Image width={20} height={20} alt="" src={"/icons/filter.svg"} />
+          </button>
+          <button className="h-9 px-2 flex gap-3 bg-forgroundColor-side-button items-center rounded-md font-sans">
+            share
+            <Image width={20} height={20} alt="" src={"/icons/send.svg"} />
+          </button>
+          <ColumnAddModal />
+        </div>
       </div>
       <div className="w-full min-h-56 rounded-sm mt-4 bg-white overflow-x-auto flex whitespace-nowrap gap-3 p-3">
         {task?.map((taskColumn) => (

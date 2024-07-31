@@ -9,6 +9,7 @@ export interface Tasks {
     description: string;
     priority: string;
     createdAt: Date;
+    deadline?: Date;
   }[];
 }
 
