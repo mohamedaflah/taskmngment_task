@@ -81,7 +81,31 @@
   .low {
     @apply px-2 rounded-lg flex-center bg-alerts-low;
   }
-  .add-button{
+  .add-button {
     /* background; */
   }
+}
+.task-card {
+  transition: all 0.3s ease;
+}
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.task-column {
+  transition: background-color 0.3s ease;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.pulse {
+  animation: pulse 1s infinite;
 }

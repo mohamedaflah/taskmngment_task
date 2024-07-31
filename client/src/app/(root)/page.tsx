@@ -169,42 +169,6 @@ export default function Home() {
           descriptioin="Sync your notes across all devices. Stay productive whether you're on your phone, tablet, or computer."
         />
       </div>
-      <style jsx global>{`
-        .task-card {
-          transition: all 0.3s ease;
-        }
-        .task-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        .task-column {
-          transition: background-color 0.3s ease;
-        }
-        @keyframes pulse {
-          0% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.05);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-        .pulse {
-          animation: pulse 1s infinite;
-        }
-      `}</style>
-      <div className="w-full flex justify-between items-center">
-        <h1 className="font-semibold text-4xl text-forgroundColor-black">
-          Good morning, {user?.name}
-        </h1>
-        <div className="flex gap-1 items-center text-forgroundColor-black">
-          <span>Help and feedback</span>
-          <Image alt="" width={23} height={23} src={"/icons/question.svg"} />
-        </div>
-      </div>
-      {/* ... (rest of the code remains the same) ... */}
       <div className="w-full min-h-56 rounded-sm mt-4 bg-white overflow-x-auto flex whitespace-nowrap gap-3 p-3">
         {task?.map((taskColumn) => (
           <div
