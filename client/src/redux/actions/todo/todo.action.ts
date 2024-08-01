@@ -123,7 +123,7 @@ export const updateTask = createAsyncThunk(
     try {
       const { data } = await axiosInstance.put(`/api/todo/task`, sendPaylod);
       return {
-        _id: sendPaylod.taskId,
+        _id: sendPaylod.todoId,
         data: { ...sendPaylod.data },
         taskId: sendPaylod.taskId,
       };

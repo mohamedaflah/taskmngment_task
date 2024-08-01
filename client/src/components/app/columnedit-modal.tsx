@@ -12,8 +12,18 @@ import { columnAddSchema } from "@/lib/Schema/columnadd.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { axiosInstance } from "@/constants/axios";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { addTask } from "@/redux/actions/todo/todo.action";
-export function ColumnEditModal() {
+import { addTask, updateTask } from "@/redux/actions/todo/todo.action";
+import { TaskCard } from "@/types/task.reducer";
+export function ColumnEditModal({
+  taskId,
+  todoId,
+  data,
+}: {
+  taskId: string;
+  todoId: string;
+  data: TaskCard;
+  status: string;
+}) {
   const modalRef = useRef<HTMLDialogElement>(null);
   const [expaned, setExapned] = useState<boolean>(false);
   const {
@@ -32,17 +42,19 @@ export function ColumnEditModal() {
       title: "",
     },
   });
+
   const dispatch = useAppDispatch();
   const handlecolumnAdd = (values: z.infer<typeof columnAddSchema>) => {
     dispatch(
-      addTask({
-        todoId: values.status,
-        task: {
+      updateTask({
+        todoId: todoId,
+        data: {
           description: values.description,
           deadline: values.deadline,
           priority: values.priority,
           title: values.title,
         },
+        taskId,
       })
     ).then((res) => {
       if (res.type.endsWith("fulfilled")) {
@@ -58,10 +70,22 @@ export function ColumnEditModal() {
       setStatus(res.data.statuses);
     });
   }, []);
+  useEffect(() => {
+    setValue("title", data.title);
+    setValue("description", data.description);
+    setValue("priority", data.priority);
+    setValue("status", todoId);
+    // setValue("status");
+  }, [data]);
   const { loading } = useAppSelector((state) => state.task);
   return (
     <>
-      <button onClick={() => modalRef?.current?.showModal()}>Edit</button>
+      <button
+        onClick={() => modalRef?.current?.showModal()}
+        className="flex justify-start items-center size-full"
+      >
+        Edit
+      </button>
       <dialog
         id="my_modal_4"
         className={cn("modal", {
@@ -104,6 +128,7 @@ export function ColumnEditModal() {
                 type="text"
                 className="w-full h-full bg-transparent text-5xl outline-none"
                 placeholder="Title"
+                value={watch("title")}
                 onChange={(e) => {
                   setValue("title", e.target.value);
                   trigger("title");
@@ -115,35 +140,6 @@ export function ColumnEditModal() {
             </div>
             <div className="mt-5 w-full ">
               <div className="flex flex-col gap-1">
-                <div className="mt-2 flex items-center gap-5 w-full justify-between ">
-                  <div className="flex gap-3 w-36 items-center">
-                    <Image
-                      src={"/icons/status.svg"}
-                      alt=""
-                      width={20}
-                      height={20}
-                    />
-                    <span>Status</span>
-                  </div>
-                  <div className="w-full ">
-                    <select
-                      className="select   w-full  bg-transparent border-none outline-none"
-                      onChange={(e) => {
-                        setValue("status", e.target.value);
-                        trigger("status");
-                      }}
-                    >
-                      <option disabled selected>
-                        not selected
-                      </option>
-                      {status?.map((status) => (
-                        <option key={status?._id} value={status?._id}>
-                          {status?.title}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
                 <span className="text-sm text-red-500">
                   {errors && errors.status && errors.status?.message}
                 </span>
@@ -170,9 +166,24 @@ export function ColumnEditModal() {
                       <option disabled selected>
                         not selected
                       </option>
-                      <option value={"urgent"}>urgent</option>
-                      <option value={"medium"}>medium</option>
-                      <option value={"low"}>low</option>
+                      <option
+                        selected={watch("priority") == "urgent"}
+                        value={"urgent"}
+                      >
+                        urgent
+                      </option>
+                      <option
+                        selected={watch("priority") == "medium"}
+                        value={"medium"}
+                      >
+                        medium
+                      </option>
+                      <option
+                        selected={watch("priority") == "low"}
+                        value={"low"}
+                      >
+                        low
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -219,6 +230,7 @@ export function ColumnEditModal() {
                   </div>
                   <div className="w-full">
                     <textarea
+                      value={watch("description")}
                       onChange={(e) => {
                         setValue("description", e.target.value);
                         trigger("description");

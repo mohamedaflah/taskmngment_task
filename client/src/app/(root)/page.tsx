@@ -301,7 +301,12 @@ export default function Home() {
                             <DropdownMenuSeparator />
                             <button className="w-full text-[14px] py-1  px-2 flex justify-start ">
                               {" "}
-                              <ColumnEditModal />
+                              <ColumnEditModal
+                                data={card}
+                                taskId={card?._id}
+                                status={taskColumn.title}
+                                todoId={taskColumn?._id}
+                              />
                             </button>
                             <DropdownMenuItem
                               onClick={() => {

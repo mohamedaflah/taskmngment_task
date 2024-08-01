@@ -3,14 +3,16 @@ export interface Tasks {
   title: string;
   createdAt: Date;
   updatedAt: Date;
-  tasks: {
-    _id: string;
-    title: string;
-    description: string;
-    priority: string;
-    createdAt: Date;
-    deadline?: Date;
-  }[];
+  tasks: TaskCard[];
+}
+
+export interface TaskCard {
+  _id: string;
+  title: string;
+  description: string;
+  priority: string;
+  createdAt: Date;
+  deadline?: Date;
 }
 
 export interface TaskReducerIntital {

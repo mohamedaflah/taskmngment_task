@@ -50,7 +50,7 @@ export function TodoTitleEditModal({
   }, [title]);
   return (
     <>
-      <button onClick={() => modalRef?.current?.showModal()}>Edit</button>
+      <button onClick={() => modalRef?.current?.showModal()} className="w-full flex justify-start h-full items-center">Edit</button>
       <dialog
         id="my_modal_4"
         className={cn("modal", {
