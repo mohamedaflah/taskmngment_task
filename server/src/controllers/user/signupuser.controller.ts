@@ -10,8 +10,8 @@ export async function signupUserController(req: Request, res: Response) {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      domain: "https://taskmngment-task.vercel.app",
-      path: "/",
+      // domain: "taskmngment-task.vercel.app",
+      // path: "/",
     });
     return res.status(201).json({ status: true, user, message: "Successfull" });
   } catch (error: Error | any) {
