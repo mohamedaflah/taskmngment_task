@@ -16,59 +16,6 @@ const initialState: TaskReducerIntital = {
   error: false,
   status: null,
   task: null,
-  // [
-  //   {
-  //     _id: "aslkdfdjalksfd",
-  //     title: "Todo",
-  //     createdAt: new Date(),
-  //     updatedAt: new Date(),
-  //     tasks: [
-  //       {
-  //         _id: "8754",
-  //         createdAt: new Date(),
-  //         description: "this it test description",
-  //         priority: "urgent",
-  //         title: "Implement usasfder interface",
-  //       },
-  //       {
-  //         _id: "456",
-  //         createdAt: new Date(),
-  //         description: "this it test description",
-  //         priority: "low",
-  //         title: "Implement user",
-  //       },
-  //       {
-  //         _id: "543",
-  //         createdAt: new Date(),
-  //         description: "this it test description",
-  //         priority: "medium",
-  //         title: "Implement asdfuser",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     _id: "biolambobanbdolid",
-  //     title: "In progress",
-  //     createdAt: new Date(),
-  //     updatedAt: new Date(),
-  //     tasks: [
-  //       {
-  //         _id: "9034",
-  //         createdAt: new Date(),
-  //         description: "this it test description",
-  //         priority: "urgent",
-  //         title: "Implemeasdfasfdser interface",
-  //       },
-  //       {
-  //         _id: "12",
-  //         createdAt: new Date(),
-  //         description: "this it test description",
-  //         priority: "low",
-  //         title: "Implement asfduser",
-  //       },
-  //     ],
-  //   },
-  // ],
 };
 
 const taskReducer = createSlice({

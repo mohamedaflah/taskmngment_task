@@ -1,8 +1,10 @@
 "use client";
 import { AddnewTaskModal } from "@/components/app/addtask-modal";
 import { ColumnAddModal } from "@/components/app/column-addmodal";
+import { ColumnEditModal } from "@/components/app/columnedit-modal";
 
 import { LandingTopCard } from "@/components/app/landing-topcard";
+import { TodoTitleEditModal } from "@/components/app/todotitleedit-modal";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -246,7 +248,13 @@ export default function Home() {
                     <DropdownMenuContent>
                       <DropdownMenuLabel>Options</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <button className="w-full text-[14px] py-1  px-2 flex justify-start">
+                        {" "}
+                        <TodoTitleEditModal
+                          title={taskColumn.title}
+                          todoId={taskColumn._id}
+                        />
+                      </button>
                       <DropdownMenuItem
                         className="flex items-center gap-1 cursor-pointer"
                         onClick={() => {
@@ -291,7 +299,10 @@ export default function Home() {
                           <DropdownMenuContent>
                             <DropdownMenuLabel>Card option</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Edit</DropdownMenuItem>
+                            <button className="w-full text-[14px] py-1  px-2 flex justify-start ">
+                              {" "}
+                              <ColumnEditModal />
+                            </button>
                             <DropdownMenuItem
                               onClick={() => {
                                 dispatch(
