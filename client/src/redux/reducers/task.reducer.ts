@@ -179,6 +179,7 @@ const taskReducer = createSlice({
         state.loading = true;
       })
       .addCase(deleteTaskCard.fulfilled, (state, { payload }) => {
+        state.loading = false;
         state.task = state.task?.map((t) => {
           if (t._id == payload.todoId) {
             return {

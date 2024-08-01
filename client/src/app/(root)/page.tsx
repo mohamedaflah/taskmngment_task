@@ -1,7 +1,7 @@
 "use client";
 import { AddnewTaskModal } from "@/components/app/addtask-modal";
 import { ColumnAddModal } from "@/components/app/column-addmodal";
-import { DeletConfirmModal } from "@/components/app/deleteconfirm-modal";
+
 import { LandingTopCard } from "@/components/app/landing-topcard";
 import {
   DropdownMenu,
@@ -13,11 +13,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { axiosInstance } from "@/constants/axios";
 import { cn } from "@/lib/utils";
-import { getTodos, updateTodo } from "@/redux/actions/todo/todo.action";
+import {
+  deleteFullTodo,
+  deleteTaskCard,
+  getTodos,
+} from "@/redux/actions/todo/todo.action";
 import { getUserAction } from "@/redux/actions/user/user.action";
 import { handleTaskDrop } from "@/redux/reducers/task.reducer";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { Loader2, LoaderIcon, Menu, Plus } from "lucide-react";
+import { Ellipsis, Loader2, LoaderIcon, Menu } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -243,7 +247,12 @@ export default function Home() {
                       <DropdownMenuLabel>Options</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem className="flex items-center gap-1 cursor-pointer">
+                      <DropdownMenuItem
+                        className="flex items-center gap-1 cursor-pointer"
+                        onClick={() => {
+                          dispatch(deleteFullTodo(String(taskColumn._id)));
+                        }}
+                      >
                         Delete
                         {loading && (
                           <>
@@ -269,10 +278,35 @@ export default function Home() {
                     }
                     className="task-card cursor-grab w-full border rounded-md bg-forgroundColor-kanbanbox min-h-56 p-3 flex flex-col gap-3"
                   >
-                    <div className="text-wrap">
-                      <h3 className="text-[15px] text-[#606060] leading-5">
-                        {card.title}
-                      </h3>
+                    <div className="text-wrap items-center">
+                      <div className="text-wrap w-full flex justify-between">
+                        <h3 className="text-[15px] text-[#606060] leading-5">
+                          {card.title}
+                        </h3>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger>
+                            {" "}
+                            <Ellipsis className="w-5 cursor-pointer" />
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            <DropdownMenuLabel>Card option</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Edit</DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                dispatch(
+                                  deleteTaskCard({
+                                    todoId: String(taskColumn._id),
+                                    taskId: String(card._id),
+                                  })
+                                );
+                              }}
+                            >
+                              Delete
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
                       <p className="text-[13px] text-[#797979] mt-1 leading-4">
                         {card.description}
                       </p>
