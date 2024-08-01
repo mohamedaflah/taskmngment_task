@@ -8,7 +8,7 @@ export async function signupUserController(req: Request, res: Response) {
     const tkn = generateJWT({ id: user._id });
     res.cookie("taskmanagementauthtoken", tkn, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       sameSite: "strict",
       domain: "https://taskmngment-task.vercel.app",
       path: "/",
