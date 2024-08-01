@@ -10,7 +10,7 @@ export async function loginController(req: Request, res: Response) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      domain: "https://taskmngment-task.vercel.app",
+      domain: "taskmngment-task.vercel.app",
       path: "/",
     });
     return res.status(200).json({ status: false, user, message: "Successful" });

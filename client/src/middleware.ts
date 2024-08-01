@@ -9,13 +9,18 @@ export async function middleware(req: NextRequest) {
 
   try {
     if (token) {
-      // const { payload } = await jwtVerify(token as unknown as string | Uint8Array, secret);
+      const secret = new TextEncoder().encode(
+        "abalasdfksecrealkjioasdfasldfkjmoahemdafalakooalth"
+      );
+      const { payload } = await jwtVerify(
+        token as unknown as string | Uint8Array,
+        secret
+      );
 
-      // Ensure the payload contains the required data
-      // if (!payload || !(payload as any).id) {
-      //   url.pathname = "/login";
-      //   return NextResponse.redirect(url);
-      // }
+      if (!payload || !(payload as any).id) {
+        url.pathname = "/login";
+        return NextResponse.redirect(url);
+      }
 
       // Redirect authenticated users away from login and signup pages
       if (url.pathname === "/login" || url.pathname === "/signup") {
