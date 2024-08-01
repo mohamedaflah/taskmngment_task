@@ -1,4 +1,5 @@
 "use client";
+import { AddnewTaskModal } from "@/components/app/addtask-modal";
 import { ColumnAddModal } from "@/components/app/column-addmodal";
 import { LandingTopCard } from "@/components/app/landing-topcard";
 import { axiosInstance } from "@/constants/axios";
@@ -249,10 +250,7 @@ export default function Home() {
                 </div>
               </div>
             ))}
-            <button className="w-full justify-between h-9 rounded-md px-2 flex items-center bg-add text-white text-sm pulse">
-              Add Task
-              <Plus className="w-5" />
-            </button>
+            <AddnewTaskModal todoId={taskColumn._id} />
           </div>
         ))}
       </div>

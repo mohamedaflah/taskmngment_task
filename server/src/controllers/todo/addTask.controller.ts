@@ -4,6 +4,7 @@ import { addTask } from "../../services/todo/addTask.service";
 export async function addTaskController(req: Request, res: Response) {
   try {
     const todo = await addTask(req.body.task, req.body.todoId);
+    console.log("🚀 ~ addTaskController ~ todo:", todo)
     return res
       .status(200)
       .json({

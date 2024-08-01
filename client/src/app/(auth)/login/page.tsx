@@ -34,7 +34,7 @@ const Login = () => {
   const handleLogin = (values: z.infer<typeof loginSchema>) => {
     dispatch(userLoginAction(values)).then((res) => {
       if (res.type.endsWith("fulfilled")) {
-        router.push("/");
+        router.replace("/");
       }
     });
   };

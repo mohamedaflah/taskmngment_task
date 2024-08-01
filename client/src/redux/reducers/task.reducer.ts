@@ -85,7 +85,13 @@ const taskReducer = createSlice({
       })
       .addCase(addTask.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.task = payload.todo;
+        state.task = state?.task?.map((t) => {
+          if (t._id == payload.todoId) {
+            return payload.todo;
+          } else {
+            return t;
+          }
+        }) as Tasks[] | null;
       })
       .addCase(addTask.rejected, (state, { payload }) => {
         state.error = String(payload);
