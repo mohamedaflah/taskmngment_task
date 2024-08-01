@@ -115,7 +115,7 @@ const Signup = () => {
             className={cn(
               "w-full h-12 rounded-md flex-center bg-create text-white gap-2",
               {
-                "pointer-events-none bg-create/70": loading,
+                "pointer-events-none": loading,
               }
             )}
             type="submit"

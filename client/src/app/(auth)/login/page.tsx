@@ -1,8 +1,10 @@
 "use client";
 import { loginSchema } from "@/lib/Schema/Login.schema";
+import { cn } from "@/lib/utils";
 import { userLoginAction } from "@/redux/actions/user/user.action";
-import { useAppDispatch } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -28,6 +30,7 @@ const Login = () => {
   });
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { loading } = useAppSelector((state) => state.user);
   const handleLogin = (values: z.infer<typeof loginSchema>) => {
     dispatch(userLoginAction(values)).then((res) => {
       if (res.type.endsWith("fulfilled")) {
@@ -86,10 +89,20 @@ const Login = () => {
             </span>
           </div>
           <button
-            className="w-full h-12 rounded-md flex-center bg-create text-white"
+            className={cn(
+              "w-full h-12 rounded-md flex-center bg-create text-white gap-2",
+              {
+                "pointer-events-none": loading,
+              }
+            )}
             type="submit"
           >
             Login
+            {loading && (
+              <>
+                <LoaderCircle className="w-5 animate-spin" />
+              </>
+            )}
           </button>
         </form>
         <div className="mt-6">
