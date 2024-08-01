@@ -35,7 +35,7 @@ export function TaskTitleAddModal() {
     dispatch(addTodo({ title: values.title })).then((res) => {
       modalRef.current?.close();
     });
-    reset();
+    setValue("title", "");
   };
   return (
     <>

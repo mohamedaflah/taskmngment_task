@@ -1,13 +1,23 @@
 "use client";
 import { AddnewTaskModal } from "@/components/app/addtask-modal";
 import { ColumnAddModal } from "@/components/app/column-addmodal";
+import { DeletConfirmModal } from "@/components/app/deleteconfirm-modal";
 import { LandingTopCard } from "@/components/app/landing-topcard";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { axiosInstance } from "@/constants/axios";
+import { cn } from "@/lib/utils";
 import { getTodos, updateTodo } from "@/redux/actions/todo/todo.action";
 import { getUserAction } from "@/redux/actions/user/user.action";
 import { handleTaskDrop } from "@/redux/reducers/task.reducer";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { Menu, Plus } from "lucide-react";
+import { Loader2, LoaderIcon, Menu, Plus } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -21,7 +31,7 @@ export default function Home() {
   }, [dispatch]);
 
   const { user } = useAppSelector((state) => state.user);
-  const { task } = useAppSelector((state) => state.task);
+  const { task, loading } = useAppSelector((state) => state.task);
 
   const [draggedItem, setDraggedItem] = useState<{
     columnId: string;
@@ -198,61 +208,101 @@ export default function Home() {
           <ColumnAddModal />
         </div>
       </div>
-      <div className="w-full min-h-56 rounded-sm mt-4 bg-white overflow-x-auto flex whitespace-nowrap gap-3 p-3">
-        {task?.map((taskColumn) => (
-          <div
-            key={taskColumn._id.toString()}
-            className="task-column min-w-56 max-w-56 gap-3 flex flex-col"
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={(e) => handleDrop(e, taskColumn._id.toString())}
-          >
-            <div className="w-full flex justify-between">
-              <span>{taskColumn.title}</span>
-              <Image width={20} height={20} alt="" src={"/icons/menu.svg"} />
-            </div>
-            {taskColumn.tasks?.map((card, index) => (
+      <div
+        className={cn(
+          "w-full min-h-56 rounded-sm mt-4 bg-white overflow-x-auto flex whitespace-nowrap gap-3 p-3 scrollbar-thin",
+          { "flex-center": loading }
+        )}
+      >
+        {loading ? (
+          <div className="w-full  h-full flex-center items-center">
+            <LoaderIcon className="w-56 animate-spin text-black" />
+          </div>
+        ) : (
+          <>
+            {task?.map((taskColumn) => (
               <div
-                id={card._id}
-                key={card._id}
-                draggable
-                onDragStart={(e) =>
-                  handleDragStart(e, taskColumn._id.toString(), card._id, index)
-                }
-                className="task-card cursor-grab w-full border rounded-md bg-forgroundColor-kanbanbox min-h-56 p-3 flex flex-col gap-3"
+                key={taskColumn._id.toString()}
+                className="task-column min-w-56 max-w-56 gap-3 flex flex-col"
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={(e) => handleDrop(e, taskColumn._id.toString())}
               >
-                <div className="text-wrap">
-                  <h3 className="text-[15px] text-[#606060] leading-5">
-                    {card.title}
-                  </h3>
-                  <p className="text-[13px] text-[#797979] mt-1 leading-4">
-                    {card.description}
-                  </p>
+                <div className="w-full flex justify-between">
+                  <span>{taskColumn.title}</span>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <Image
+                        width={20}
+                        height={20}
+                        alt=""
+                        src={"/icons/menu.svg"}
+                      />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuLabel>Options</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem className="flex items-center gap-1 cursor-pointer">
+                        Delete
+                        {loading && (
+                          <>
+                            <Loader2 className="w-4 animate-spin" />
+                          </>
+                        )}
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
-                <div>
+                {taskColumn.tasks?.map((card, index) => (
                   <div
-                    className={`${card?.priority?.toLowerCase()} inline-block text-white text-[13px] py-1 font-[400]`}
+                    id={card._id}
+                    key={card._id}
+                    draggable
+                    onDragStart={(e) =>
+                      handleDragStart(
+                        e,
+                        taskColumn._id.toString(),
+                        card._id,
+                        index
+                      )
+                    }
+                    className="task-card cursor-grab w-full border rounded-md bg-forgroundColor-kanbanbox min-h-56 p-3 flex flex-col gap-3"
                   >
-                    {card.priority}
+                    <div className="text-wrap">
+                      <h3 className="text-[15px] text-[#606060] leading-5">
+                        {card.title}
+                      </h3>
+                      <p className="text-[13px] text-[#797979] mt-1 leading-4">
+                        {card.description}
+                      </p>
+                    </div>
+                    <div>
+                      <div
+                        className={`${card?.priority?.toLowerCase()} inline-block text-white text-[13px] py-1 font-[400]`}
+                      >
+                        {card.priority}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Image
+                        width={20}
+                        height={20}
+                        alt=""
+                        src={"/icons/time-pick.svg"}
+                      />
+                      <span className="text-sm">2024-08-15</span>
+                    </div>
+                    <div>
+                      <span className="text-sm">1 hr ago</span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Image
-                    width={20}
-                    height={20}
-                    alt=""
-                    src={"/icons/time-pick.svg"}
-                  />
-                  <span className="text-sm">2024-08-15</span>
-                </div>
-                <div>
-                  <span className="text-sm">1 hr ago</span>
-                </div>
+                ))}
+                <AddnewTaskModal todoId={taskColumn._id} />
               </div>
             ))}
-            <AddnewTaskModal todoId={taskColumn._id} />
-          </div>
-        ))}
+          </>
+        )}
       </div>
     </main>
   );

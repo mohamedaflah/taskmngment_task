@@ -86,3 +86,81 @@ export const addTodoTitle = createAsyncThunk(
     }
   }
 );
+
+export const updateTodoTitle = createAsyncThunk(
+  "todo/update-todotitle",
+  async (
+    sendPayload: { todoId: string; title: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await axiosInstance.patch(
+        `/api/todo/status`,
+        sendPayload
+      );
+      return sendPayload;
+    } catch (error) {
+      return rejectWithValue(handleErrors(error));
+    }
+  }
+);
+
+export const updateTask = createAsyncThunk(
+  "todo/update-task-action",
+  async (
+    sendPaylod: {
+      todoId: string;
+      data: {
+        title: string;
+        description: string;
+        priority: string;
+        deadline: string | Date;
+      };
+      taskId: string;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await axiosInstance.put(`/api/todo/task`, sendPaylod);
+      return {
+        _id: sendPaylod.taskId,
+        data: { ...sendPaylod.data },
+        taskId: sendPaylod.taskId,
+      };
+    } catch (error) {
+      return rejectWithValue(handleErrors(error));
+    }
+  }
+);
+
+export const deleteFullTodo = createAsyncThunk(
+  "todo/delete-full",
+  async (todoId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.delete(
+        `/api/todo/todo?todoId=${todoId}`
+      );
+      return { todoId };
+    } catch (error) {
+      return rejectWithValue(handleErrors(error));
+    }
+  }
+);
+// delete spcific task with Id => delete => `/api/todo/task => { status: true, message: "deletion done" }
+
+export const deleteTaskCard = createAsyncThunk(
+  "todo/task/delete-task",
+  async (
+    { taskId, todoId }: { todoId: string; taskId: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await axiosInstance.delete(
+        `/api/todo/task?todoId=${todoId}&taskId=${taskId}`
+      );
+      return { todoId: todoId, taskId: taskId };
+    } catch (error) {
+      return rejectWithValue(handleErrors(error));
+    }
+  }
+);
