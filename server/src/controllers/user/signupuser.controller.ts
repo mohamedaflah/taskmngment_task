@@ -10,7 +10,7 @@ export async function signupUserController(req: Request, res: Response) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      domain: "https://taskmngment-task.vercel.app/",
+      domain: "https://taskmngment-task.vercel.app",
       path: "/",
     });
     return res.status(201).json({ status: true, user, message: "Successfull" });
