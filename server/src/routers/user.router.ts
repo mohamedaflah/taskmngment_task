@@ -12,4 +12,5 @@ userRouter
   .get(getUserController)
   .delete(logoutController);
 userRouter.route(`/login`).post(loginController);
+userRouter.get("/validate-session")
 export default userRouter;

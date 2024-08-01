@@ -5,6 +5,11 @@ import { getUser } from "../../services/getuser.service";
 export async function getUserController(req: Request, res: Response) {
   try {
     const token = req.cookies["taskmanagementauthtoken"];
+    if (!(req.session as any).user || !(req.session as any).user.id) {
+      return res
+        .status(401)
+        .json({ user: null, status: false, message: "Unauthorized" });
+    }
     if (!token)
       return res
         .status(401)

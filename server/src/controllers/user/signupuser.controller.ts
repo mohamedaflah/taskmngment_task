@@ -6,13 +6,14 @@ export async function signupUserController(req: Request, res: Response) {
   try {
     const user = await createUser(req.body);
     const tkn = generateJWT({ id: user._id });
-    res.cookie("taskmanagementauthtoken", tkn, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      // domain: "taskmngment-task.vercel.app",
-      path: "/",
-    });
+    (req.session as any).user = { id: user._id };
+    // res.cookie("taskmanagementauthtoken", tkn, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: "strict",
+    //   // domain: "taskmngment-task.vercel.app",
+    //   path: "/",
+    // });
     return res.status(201).json({ status: true, user, message: "Successfull" });
   } catch (error: Error | any) {
     return res.status(500).json({ status: false, message: error.message });
