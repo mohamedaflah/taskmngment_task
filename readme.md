@@ -15,3 +15,23 @@
 ## Currently I am facing some issues in my deployed project front and backend because I am using free hosting service that why you can clone and test this project this work perfectly with all functionality
 
 ## Ensure .env file added in both client and server, refer .env.local and env.sample.txt file
+
+#
+
+#
+
+# Home page
+
+[![Home page](/media/home-page.png)]()
+
+# Add new column
+
+[![Add new column](/media/Add-todo.png)]()
+
+# Add task in column
+
+[![Add task in column](/media/Add-task.png)]()
+
+# Drag and Drop Area
+
+[![Drag and Drop Area](/media/Draganddrop.png)]()
