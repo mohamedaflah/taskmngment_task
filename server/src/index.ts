@@ -22,19 +22,20 @@ app.use(
   })
 );
 app.use(express.json());
-app.use(
-  session({
-    secret: process.env.JWT_SECRET as string, // Change this to your own secret key
-    resave: false,
-    saveUninitialized: false,
-    store: store,
-    cookie: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV ? false : true,
-      sameSite: "strict",
-    },
-  })
-);
+// app.use(
+//   session({
+//     secret: process.env.JWT_SECRET as string, // Change this to your own secret key
+//     resave: false,
+//     saveUninitialized: false,
+//     store: store,
+//     cookie: {
+//       httpOnly: true,
+//       secure: process.env.NODE_ENV ? false : true,
+//       sameSite: "strict",
+      
+//     },
+//   })
+// );
 app.use(`/api/user`, userRouter);
 app.use(`/api/todo`, taskRouter);
 app.listen(5000, () => console.log(`Server start`));
