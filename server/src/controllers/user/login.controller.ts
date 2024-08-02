@@ -9,7 +9,7 @@ export async function loginController(req: Request, res: Response) {
     res.cookie("taskmanagementauthtoken", tkn, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
       // domain: "taskmngment-task.vercel.app",
       path: "/",
     });
